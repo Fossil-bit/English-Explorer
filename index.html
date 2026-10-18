@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>English Explorer: Vocabulary & Categories (ป.3)</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts & Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gradient-to-br from-emerald-50 via-teal-50 to-sky-50 min-h-screen text-slate-800 pb-16">
+
+  <!-- ========================================== -->
+  <!-- 1. TOP NAVBAR                              -->
+  <!-- ========================================== -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-emerald-100 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      
+      <!-- Logo & Title -->
+      <div onclick="switchView('viewHome')" class="flex items-center gap-3 cursor-pointer group">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-white text-2xl shadow-md group-hover:scale-105 transition-all">
+          🦁
+        </div>
+        <div>
+          <h1 class="text-lg md:text-xl font-bold font-display text-slate-800 leading-tight flex items-center gap-2">
+            <span>English Explorer</span>
+            <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold">ป.3</span>
+          </h1>
+          <p class="text-xs text-slate-500 font-medium">Vocabulary & Categories</p>
+        </div>
+      </div>
+
+      <!-- Action Nav Buttons -->
+      <div class="flex items-center gap-2 md:gap-3">
+        <!-- Sound FX Toggle -->
+        <button id="btnSoundToggle" class="w-10 h-10 rounded-2xl bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-all text-lg shadow-sm" title="เปิด/ปิดเสียงเอฟเฟกต์">
+          <i class="fa-solid fa-volume-high text-emerald-600"></i>
+        </button>
+
+        <!-- View Lesson Plan -->
+        <button onclick="switchView('viewPlan')" class="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-2xl bg-indigo-50 text-indigo-700 hover:bg-indigo-100 font-bold text-xs border border-indigo-200 transition-all">
+          <i class="fa-solid fa-book-open"></i> แผนการสอน
+        </button>
+
+        <!-- Unauthenticated Button -->
+        <div id="headerUnauth">
+          <button onclick="openLoginModal()" class="btn-fun bg-emerald-500 hover:bg-emerald-600 border-emerald-700 text-white px-4 py-2 rounded-2xl text-xs md:text-sm font-bold flex items-center gap-2 shadow-sm">
+            <i class="fa-solid fa-user-plus"></i> เข้าสู่ระบบ / ลงทะเบียน
+          </button>
+        </div>
+
+        <!-- Authenticated Profile Capsule -->
+        <div id="headerAuth" class="hidden flex items-center gap-2">
+          <div onclick="switchView('viewHome')" class="flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-slate-100 hover:bg-slate-200 cursor-pointer border border-slate-200 transition-all">
+            <span class="user-rank-shield text-xl">🛡️</span>
+            <div class="text-left">
+              <div class="user-name-display text-xs font-bold text-slate-800 max-w-[120px] truncate">ผู้เล่น</div>
+              <div class="user-rank-title text-[10px] font-bold text-emerald-700">เริ่มต้น</div>
+            </div>
+          </div>
+          <button onclick="handleLogout()" class="w-9 h-9 rounded-2xl bg-rose-50 hover:bg-rose-100 text-rose-600 flex items-center justify-center text-sm border border-rose-200 transition-all" title="ออกจากระบบ">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================== -->
+  <!-- 2. MAIN CONTAINER                          -->
+  <!-- ========================================== -->
+  <main class="max-w-5xl mx-auto px-4 mt-6">
+
+    <!-- ---------------------------------------- -->
+    <!-- VIEW: HOME SCREEN                        -->
+    <!-- ---------------------------------------- -->
+    <section id="viewHome" class="space-y-6">
+
+      <!-- Guest Welcome Banner -->
+      <div id="homeBannerGuest" class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-emerald-500 via-teal-600 to-cyan-600 p-8 text-white shadow-xl">
+        <div class="relative z-10 max-w-xl">
+          <span class="inline-block px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-bold mb-3 tracking-wide">
+            🌟 แหล่งเรียนรู้และเกมฝึกคำศัพท์ ป.3
+          </span>
+          <h2 class="text-3xl md:text-4xl font-extrabold font-display leading-tight mb-3">
+            ยินดีต้อนรับสู่โลกของคำศัพท์และหมวดหมู่!
+          </h2>
+          <p class="text-emerald-100 text-sm md:text-base mb-6 leading-relaxed">
+            ฝึกฝนคำศัพท์ 5 หมวดหมู่หลัก (Animals, Food, School Things, Jobs, Clothes) พร้อมสะสมคะแนนไต่ยศสู่ระดับตำนาน!
+          </p>
+          <div class="flex flex-wrap gap-3">
+            <button onclick="openLoginModal()" class="btn-fun bg-amber-400 hover:bg-amber-300 border-amber-600 text-slate-900 px-6 py-3 rounded-2xl font-bold text-sm shadow-lg flex items-center gap-2">
+              <i class="fa-solid fa-rocket"></i> ลงทะเบียน / เข้าสู่ระบบด้วยชื่อ
+            </button>
+            <button onclick="switchView('viewLessons')" class="px-5 py-3 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/30 backdrop-blur-md text-white font-bold text-sm transition-all flex items-center gap-2">
+              <i class="fa-solid fa-book-bookmark"></i> ดูเนื้อหาบทเรียนก่อน
+            </button>
+          </div>
+        </div>
+        <div class="absolute -right-8 -bottom-8 opacity-20 md:opacity-35 pointer-events-none text-9xl">
+          🎓
+        </div>
+      </div>
+
+      <!-- Logged-in User Profile Card -->
+      <div id="homeBannerUser" class="hidden glass-panel rounded-3xl p-6 shadow-md border-2 border-emerald-100">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+          
+          <div class="flex items-center gap-4">
+            <div class="relative">
+              <div class="user-rank-shield text-5xl md:text-6xl p-3 bg-gradient-to-tr from-amber-100 to-amber-200 rounded-3xl shadow-inner border border-amber-300 animate-float">
+                🛡️
+              </div>
+            </div>
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <h2 class="user-name-display text-2xl font-bold text-slate-800 font-display">ชื่อนักเรียน</h2>
+                <span class="user-rank-title">ยศเริ่มต้น</span>
+              </div>
+              <p class="text-xs text-slate-500">นักเรียนระดับชั้นประถมศึกษาปีที่ 3 • วิชาภาษาอังกฤษ</p>
+              
+              <!-- XP Level Progress -->
+              <div class="mt-3 w-full max-w-md">
+                <div class="flex justify-between text-xs font-bold text-slate-600 mb-1">
+                  <span>ระดับความก้าวหน้า (XP)</span>
+                  <span id="userXpText">0 / 100 คะแนน</span>
+                </div>
+                <div class="w-full h-3 bg-slate-200 rounded-full overflow-hidden shadow-inner">
+                  <div id="userXpProgress" class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-500" style="width: 15%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Stats Pill Grid -->
+          <div class="grid grid-cols-3 gap-3 w-full md:w-auto">
+            <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-3 text-center min-w-[90px]">
+              <div class="user-score-display text-xl font-black text-emerald-700 font-display">0</div>
+              <div class="text-[11px] font-bold text-emerald-800">คะแนนสะสม</div>
+            </div>
+            <div class="bg-blue-50 border border-blue-200 rounded-2xl p-3 text-center min-w-[90px]">
+              <div class="user-games-display text-xl font-black text-blue-700 font-display">0</div>
+              <div class="text-[11px] font-bold text-blue-800">จำนวนเกมที่เล่น</div>
+            </div>
+            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3 text-center min-w-[90px]">
+              <div class="user-last-display text-xl font-black text-amber-700 font-display">0</div>
+              <div class="text-[11px] font-bold text-amber-800">คะแนนรอบล่าสุด</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Main Navigation Menu Cards (4 Big Fun Buttons) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <!-- 1. Play Game Card with 5 Question Sets Selector -->
+        <div class="glass-panel p-6 rounded-3xl border-2 border-emerald-200 hover:border-emerald-400 hover:shadow-xl transition-all relative overflow-hidden">
+          <div onclick="startGame()" class="flex items-center gap-4 cursor-pointer group">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 text-white flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform">
+              🎮
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xl font-bold text-slate-800 font-display">เริ่มเล่นเกมทดสอบ (Play Game)</h3>
+                <span class="text-xs bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full font-bold">5 ชุดคำถาม</span>
+              </div>
+              <p class="text-xs text-slate-500 mt-1">ทดสอบ 10 ข้อ/รอบ สลับข้อถูกทุกครั้ง และสุ่มโจทย์ไม่ซ้ำกัน</p>
+            </div>
+          </div>
+
+          <!-- 5 Question Sets Selector Buttons -->
+          <div class="mt-4 pt-3 border-t border-slate-100">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-slate-700 flex items-center gap-1">
+                <i class="fa-solid fa-layer-group text-emerald-600"></i> เลือกชุดคำถาม (สำรอง 5 ชุด):
+              </span>
+              <span class="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                🔀 สลับข้อถูกทุกรอบ
+              </span>
+            </div>
+            <div class="grid grid-cols-3 sm:grid-cols-6 gap-1.5 text-center text-xs">
+              <button id="btnSetSelect-auto" onclick="selectQuestionSet('auto'); event.stopPropagation();" 
+                      class="btn-set-choice px-2 py-1.5 rounded-xl border border-slate-200 bg-emerald-100 ring-4 ring-emerald-400 font-black text-emerald-900 transition-all hover:bg-emerald-50" title="สุ่มชุดคำถามอัตโนมัติไม่ซ้ำกับรอบที่แล้ว">
+                🎲 สุ่มชุด
+              </button>
+              <button id="btnSetSelect-0" onclick="selectQuestionSet(0); event.stopPropagation();" 
+                      class="btn-set-choice px-2 py-1.5 rounded-xl border border-slate-200 bg-white text-slate-700 transition-all hover:bg-slate-50" title="ชุดที่ 1: ดินแดนคำศัพท์ (10 ข้อ)">
+                ชุดที่ 1
+              </button>
+              <button id="btnSetSelect-1" onclick="selectQuestionSet(1); event.stopPropagation();" 
+                      class="btn-set-choice px-2 py-1.5 rounded-xl border border-slate-200 bg-white text-slate-700 transition-all hover:bg-slate-50" title="ชุดที่ 2: ห้องเรียนและชีวิตประจำวัน (10 ข้อ)">
+                ชุดที่ 2
+              </button>
+              <button id="btnSetSelect-2" onclick="selectQuestionSet(2); event.stopPropagation();" 
+                      class="btn-set-choice px-2 py-1.5 rounded-xl border border-slate-200 bg-white text-slate-700 transition-all hover:bg-slate-50" title="ชุดที่ 3: ธรรมชาติ อาหาร และชุมชน (10 ข้อ)">
+                ชุดที่ 3
+              </button>
+              <button id="btnSetSelect-3" onclick="selectQuestionSet(3); event.stopPropagation();" 
+                      class="btn-set-choice px-2 py-1.5 rounded-xl border border-slate-200 bg-white text-slate-700 transition-all hover:bg-slate-50" title="ชุดที่ 4: ยอดนักสำรวจรอบตัวเรา (10 ข้อ)">
+                ชุดที่ 4
+              </button>
+              <button id="btnSetSelect-4" onclick="selectQuestionSet(4); event.stopPropagation();" 
+                      class="btn-set-choice px-2 py-1.5 rounded-xl border border-slate-200 bg-white text-slate-700 transition-all hover:bg-slate-50" title="ชุดที่ 5: ศึกยอดฝีมือขั้นเซียน (10 ข้อ)">
+                ชุดที่ 5
+              </button>
+            </div>
+          </div>
+
+          <div onclick="startGame()" class="mt-3 flex items-center justify-between pt-2 border-t border-slate-100 text-xs font-bold text-emerald-600 cursor-pointer hover:text-emerald-700">
+            <span>คลิกเพื่อเริ่มทำแบบทดสอบทันที</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        </div>
+
+        <!-- 2. Lessons & Flashcards Card -->
+        <div onclick="switchView('viewLessons')" class="glass-panel p-6 rounded-3xl cursor-pointer hover:border-blue-400 hover:shadow-xl transition-all group relative overflow-hidden">
+          <div class="flex items-center gap-4">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-blue-500 to-indigo-500 text-white flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform">
+              📚
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xl font-bold text-slate-800 font-display">บทเรียนและสื่อการสอน (Lessons)</h3>
+                <span class="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-bold">5 หมวด</span>
+              </div>
+              <p class="text-xs text-slate-500 mt-1">ศึกษาคำศัพท์ รูปภาพ พร้อมฟังเสียงอ่านออกเสียงภาษาอังกฤษ</p>
+            </div>
+          </div>
+          <div class="mt-4 flex items-center justify-between pt-3 border-t border-slate-100 text-xs font-bold text-blue-600">
+            <span>เข้าศึกษาบทเรียน & การออกเสียง</span>
+            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+          </div>
+        </div>
+
+        <!-- 3. Leaderboard Card -->
+        <div onclick="switchView('viewLeaderboard')" class="glass-panel p-6 rounded-3xl cursor-pointer hover:border-amber-400 hover:shadow-xl transition-all group relative overflow-hidden">
+          <div class="flex items-center gap-4">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-amber-400 to-orange-500 text-white flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform">
+              🏆
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xl font-bold text-slate-800 font-display">กระดานผู้นำ & อันดับยศ (Leaderboard)</h3>
+                <span class="text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-bold">Google Sheets</span>
+              </div>
+              <p class="text-xs text-slate-500 mt-1">ดูตารางอันดับเพื่อนๆ ในห้องเรียน และเกณฑ์เลื่อนยศประจำตัว</p>
+            </div>
+          </div>
+          <div class="mt-4 flex items-center justify-between pt-3 border-t border-slate-100 text-xs font-bold text-amber-600">
+            <span>ตรวจสอบตารางอันดับ</span>
+            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+          </div>
+        </div>
+
+        <!-- 4. Teaching Plan (สำหรับครูและผู้ปกครอง) -->
+        <div onclick="switchView('viewPlan')" class="glass-panel p-6 rounded-3xl cursor-pointer hover:border-purple-400 hover:shadow-xl transition-all group relative overflow-hidden">
+          <div class="flex items-center gap-4">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-purple-500 to-pink-500 text-white flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform">
+              📋
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xl font-bold text-slate-800 font-display">แผนการจัดการเรียนรู้ (Lesson Plan)</h3>
+                <span class="text-xs bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full font-bold">สำหรับครู</span>
+              </div>
+              <p class="text-xs text-slate-500 mt-1">มาตรฐานตัวชี้วัด ป.3 ขั้นตอน 2W3P และการวัดผลประเมินผล</p>
+            </div>
+          </div>
+          <div class="mt-4 flex items-center justify-between pt-3 border-t border-slate-100 text-xs font-bold text-purple-600">
+            <span>เปิดอ่านแผนการสอนฉบับสมบูรณ์</span>
+            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Rank Progression Guide Banner -->
+      <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200">
+        <h3 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
+          <span>🛡️ ขั้นยศผู้พิทักษ์คำศัพท์ภาษาอังกฤษ</span>
+          <span class="text-xs font-normal text-slate-500">(สะสมคะแนนจากการเล่นเกมเพื่อเลื่อนยศ)</span>
+        </h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 text-center text-xs">
+          <div class="p-2.5 rounded-2xl bg-amber-50 border border-amber-200">
+            <div class="text-2xl mb-1">🛡️</div>
+            <div class="font-bold text-amber-900">เริ่มต้น</div>
+            <div class="text-[10px] text-slate-500">0 - 99 คะแนน</div>
+          </div>
+          <div class="p-2.5 rounded-2xl bg-slate-50 border border-slate-200">
+            <div class="text-2xl mb-1">🛡️</div>
+            <div class="font-bold text-slate-800">ปกติ</div>
+            <div class="text-[10px] text-slate-500">100 - 299 คะแนน</div>
+          </div>
+          <div class="p-2.5 rounded-2xl bg-yellow-50 border border-yellow-200">
+            <div class="text-2xl mb-1">🥇</div>
+            <div class="font-bold text-yellow-800">สุดยอด</div>
+            <div class="text-[10px] text-slate-500">300 - 599 คะแนน</div>
+          </div>
+          <div class="p-2.5 rounded-2xl bg-cyan-50 border border-cyan-200">
+            <div class="text-2xl mb-1">💎</div>
+            <div class="font-bold text-cyan-800">ตำนาน</div>
+            <div class="text-[10px] text-slate-500">600 - 999 คะแนน</div>
+          </div>
+          <div class="p-2.5 rounded-2xl bg-orange-50 border border-orange-200">
+            <div class="text-2xl mb-1">🔥</div>
+            <div class="font-bold text-orange-800">ปีลึก</div>
+            <div class="text-[10px] text-slate-500">1,000 - 1,499 คะแนน</div>
+          </div>
+          <div class="p-2.5 rounded-2xl bg-purple-50 border border-purple-200">
+            <div class="text-2xl mb-1">👑</div>
+            <div class="font-bold text-purple-900">เก่ามาก</div>
+            <div class="text-[10px] text-slate-500">1,500+ คะแนน</div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ---------------------------------------- -->
+    <!-- VIEW: LESSONS & MATERIALS (สื่อการสอน)    -->
+    <!-- ---------------------------------------- -->
+    <section id="viewLessons" class="hidden space-y-6">
+      
+      <!-- Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
+        <div>
+          <button onclick="switchView('viewHome')" class="text-xs font-bold text-emerald-600 hover:text-emerald-700 flex items-center gap-1 mb-2">
+            <i class="fa-solid fa-arrow-left"></i> กลับหน้าหลัก
+          </button>
+          <h2 class="text-2xl font-bold text-slate-800 font-display">บทเรียนและสื่อการสอน: คำศัพท์ & หมวดหมู่</h2>
+          <p class="text-xs text-slate-500 mt-1">คลิกปุ่มลำโพง 🔊 เพื่อฟังเสียงอ่านภาษาอังกฤษอย่างถูกต้อง และศึกษาก่อนลงสนามเกม</p>
+        </div>
+        <button onclick="startGame()" class="btn-fun bg-emerald-500 hover:bg-emerald-600 border-emerald-700 text-white px-5 py-2.5 rounded-2xl font-bold text-sm flex items-center gap-2 shadow-sm self-start sm:self-auto">
+          <i class="fa-solid fa-gamepad"></i> พร้อมแล้ว! เล่นเกมเลย
+        </button>
+      </div>
+
+      <!-- Category Filter Tabs -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-2">
+        <button id="tab-all" onclick="filterLessons('all')" class="lesson-tab-btn px-4 py-2 rounded-2xl font-bold text-sm bg-emerald-600 text-white shadow-md transition-all">
+          ทั้งหมด (All)
+        </button>
+        <button id="tab-animals" onclick="filterLessons('animals')" class="lesson-tab-btn px-4 py-2 rounded-2xl font-bold text-sm bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all">
+          🐾 สัตว์ (Animals)
+        </button>
+        <button id="tab-food" onclick="filterLessons('food')" class="lesson-tab-btn px-4 py-2 rounded-2xl font-bold text-sm bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all">
+          🍎 อาหาร & ผลไม้ (Food)
+        </button>
+        <button id="tab-school" onclick="filterLessons('school')" class="lesson-tab-btn px-4 py-2 rounded-2xl font-bold text-sm bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all">
+          ✏️ อุปกรณ์การเรียน (School)
+        </button>
+        <button id="tab-jobs" onclick="filterLessons('jobs')" class="lesson-tab-btn px-4 py-2 rounded-2xl font-bold text-sm bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all">
+          👨‍⚕️ อาชีพ (Jobs)
+        </button>
+        <button id="tab-clothes" onclick="filterLessons('clothes')" class="lesson-tab-btn px-4 py-2 rounded-2xl font-bold text-sm bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all">
+          👕 เครื่องแต่งกาย (Clothes)
+        </button>
+      </div>
+
+      <!-- Lesson Flashcards Container -->
+      <div id="lessonsCardsContainer" class="space-y-6">
+        <!-- Rendered dynamically via JavaScript -->
+      </div>
+
+    </section>
+
+    <!-- ---------------------------------------- -->
+    <!-- VIEW: GAME PLAY (หน้าเล่นเกม)             -->
+    <!-- ---------------------------------------- -->
+    <section id="viewGame" class="hidden space-y-6">
+
+      <!-- In-Game Top Control Bar -->
+      <div class="glass-panel p-4 md:p-5 rounded-3xl shadow-md border-2 border-slate-200 flex flex-wrap items-center justify-between gap-4">
+        
+        <!-- Left: Question Counter & Category Badge -->
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-blue-600 text-white font-black flex items-center justify-center font-display text-lg shadow-sm">
+            <span id="gameCurrentQNumber">1</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs text-slate-400 font-bold uppercase tracking-wider">
+                ข้อที่ <span id="gameCurrentQNumberText">1</span> จากทั้งหมด <span id="gameTotalQNumber">10</span> ข้อ
+              </span>
+              <span id="gameSetBadge" class="text-[11px] bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded-full font-bold shadow-xs">
+                ชุดที่ 1/5 (สลับข้อถูก)
+              </span>
+            </div>
+            <div id="gameCategoryBadge" class="text-sm font-bold text-slate-800">
+              หมวดหมู่คำถาม
+            </div>
+          </div>
+        </div>
+
+        <!-- Center: Interactive Question Navigation Pills (1 - 10) -->
+        <div id="questionNavPills" class="flex items-center gap-1.5 flex-wrap">
+          <!-- Rendered dynamically: buttons 1-10 with answered/unanswered color coding -->
+        </div>
+
+        <!-- Right: Cancel Game Button -->
+        <div>
+          <button onclick="openCancelDialog()" class="px-3.5 py-2 rounded-2xl bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 font-bold text-xs flex items-center gap-1.5 transition-all">
+            <i class="fa-solid fa-xmark"></i> ยกเลิกการเล่น
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Question Card Container -->
+      <div class="bg-white rounded-3xl p-6 md:p-8 shadow-md border border-slate-200 relative">
+        <div id="gameQuestionCard">
+          <!-- Question content (Multiple choice or matching) injected via app.js -->
+        </div>
+
+        <!-- Hint Accordion Container -->
+        <div id="gameHintContainer" class="hidden mt-6 p-4 rounded-2xl bg-amber-50 border-2 border-amber-300 animate-wiggle">
+          <div class="flex items-start gap-3">
+            <span class="text-2xl">💡</span>
+            <div>
+              <h4 class="font-bold text-amber-900 text-sm">Trick / คำใบ้ช่วยตอบ:</h4>
+              <p id="gameHintText" class="text-xs text-amber-800 mt-1 leading-relaxed">
+                คำใบ้จะปรากฏที่นี่
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- In-Game Bottom Navigation Controls -->
+      <div class="flex items-center justify-between gap-4">
+        
+        <!-- Back Button -->
+        <button id="btnPrevQuestion" onclick="prevQuestion()" class="btn-fun bg-white hover:bg-slate-50 border-slate-300 text-slate-700 px-5 py-3 rounded-2xl font-bold text-sm shadow-sm flex items-center gap-2">
+          <i class="fa-solid fa-chevron-left"></i> ข้อก่อนหน้า (Back)
+        </button>
+
+        <!-- Center: Hint Button -->
+        <button onclick="toggleHint()" class="btn-fun bg-amber-400 hover:bg-amber-300 border-amber-600 text-slate-900 px-5 py-3 rounded-2xl font-bold text-sm shadow-md flex items-center gap-2">
+          <i class="fa-solid fa-lightbulb"></i> ดู Trick / คำใบ้ (Hint)
+        </button>
+
+        <!-- Next Question Button -->
+        <button id="btnNextQuestion" onclick="nextQuestion()" class="btn-fun bg-blue-600 hover:bg-blue-700 border-blue-800 text-white px-6 py-3 rounded-2xl font-bold text-sm shadow-md flex items-center gap-2">
+          ข้อถัดไป (Next) <i class="fa-solid fa-chevron-right"></i>
+        </button>
+
+        <!-- Submit Button (Shown on final question) -->
+        <button id="btnSubmitGame" onclick="validateAndSubmitGame()" class="hidden btn-fun bg-emerald-500 hover:bg-emerald-600 border-emerald-700 text-white px-6 py-3 rounded-2xl font-bold text-sm shadow-lg flex items-center gap-2 animate-pulse-subtle">
+          <i class="fa-solid fa-paper-plane"></i> ส่งคำตอบตรวจผล (Submit)
+        </button>
+
+      </div>
+
+    </section>
+
+    <!-- ---------------------------------------- -->
+    <!-- VIEW: SUMMARY & ANALYSIS (สรุปผลคะแนน)    -->
+    <!-- ---------------------------------------- -->
+    <section id="viewSummary" class="hidden space-y-6">
+
+      <!-- Score Header Celebration -->
+      <div class="glass-panel p-8 rounded-3xl shadow-xl border-2 border-emerald-200 text-center relative overflow-hidden">
+        <div class="text-6xl mb-3 animate-float">🎉</div>
+        <h2 class="text-3xl font-black text-slate-800 font-display">สรุปผลการทดสอบคำศัพท์</h2>
+        <p class="text-xs text-slate-500 mt-1">Vocabulary & Categories Mastery Report</p>
+        <div id="summarySetNameBadge" class="mt-2 inline-block px-3.5 py-1 bg-indigo-100 text-indigo-800 text-xs font-bold rounded-full shadow-xs">
+          ชุดที่ 1: ดินแดนคำศัพท์ (Land of Words)
+        </div>
+
+        <!-- Score Ring & Stars -->
+        <div class="my-6 inline-flex flex-col items-center justify-center p-6 rounded-3xl bg-emerald-50 border-2 border-emerald-300 shadow-inner">
+          <div id="summaryScoreDisplay" class="text-5xl font-black text-emerald-700 font-display">
+            10 / 10
+          </div>
+          <div id="summaryPercentDisplay" class="text-sm font-bold text-emerald-800 mt-1">
+            ความแม่นยำ 100%
+          </div>
+          <div id="summaryStarsDisplay" class="text-base font-bold text-amber-500 mt-2">
+            ⭐⭐⭐ ยอดเยี่ยมที่สุด!
+          </div>
+        </div>
+
+        <!-- Comparative Analysis with Previous Attempt -->
+        <div class="max-w-xl mx-auto">
+          <div id="summaryComparisonCard" class="p-4 rounded-2xl border text-sm leading-relaxed">
+            <!-- Injected via app.js -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Recommendations for Improvement -->
+      <div id="summaryRecommendations" class="space-y-3">
+        <div class="flex items-center gap-2 text-slate-800 font-bold text-lg">
+          <i class="fa-solid fa-compass text-amber-500"></i>
+          <span>คำแนะนำเพื่อพัฒนาทักษะ (Recommendations):</span>
+        </div>
+        <p class="text-xs text-slate-500">
+          ระบบตรวจพบจุดที่น้องทำผิด คลิกที่ปุ่มด้านล่างเพื่อเข้าสู่บทเรียนทบทวนคำศัพท์ในหมวดนั้นๆ ได้ทันที:
+        </p>
+        <div id="recommendationLinksList" class="space-y-2">
+          <!-- Recommendation topic pills injected dynamically -->
+        </div>
+      </div>
+
+      <!-- Mistakes Detailed Review -->
+      <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-4">
+        <h3 class="font-bold text-slate-800 text-base flex items-center gap-2">
+          <i class="fa-solid fa-list-check text-blue-600"></i> ตรวจคำตอบอย่างละเอียด (Answer Review)
+        </h3>
+        <div id="summaryMistakesList" class="space-y-3">
+          <!-- Injected dynamically -->
+        </div>
+      </div>
+
+      <!-- Post-Game Navigation Actions -->
+      <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+        <button onclick="startGame()" class="btn-fun bg-emerald-500 hover:bg-emerald-600 border-emerald-700 text-white px-6 py-3 rounded-2xl font-bold text-sm shadow-md flex items-center gap-2">
+          <i class="fa-solid fa-rotate-right"></i> เล่นอีกรอบเพื่อพัฒนาคะแนน
+        </button>
+        <button onclick="switchView('viewLeaderboard')" class="btn-fun bg-amber-400 hover:bg-amber-300 border-amber-600 text-slate-900 px-6 py-3 rounded-2xl font-bold text-sm shadow-md flex items-center gap-2">
+          <i class="fa-solid fa-trophy"></i> ดูกระดานผู้นำ (Leaderboard)
+        </button>
+        <button onclick="switchView('viewHome')" class="px-5 py-3 rounded-2xl bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-sm transition-all flex items-center gap-2">
+          <i class="fa-solid fa-house"></i> กลับสู่หน้าหลัก
+        </button>
+      </div>
+
+    </section>
+
+    <!-- ---------------------------------------- -->
+    <!-- VIEW: LEADERBOARD (กระดานผู้นำ)           -->
+    <!-- ---------------------------------------- -->
+    <section id="viewLeaderboard" class="hidden space-y-6">
+      
+      <div class="flex items-center justify-between bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
+        <div>
+          <button onclick="switchView('viewHome')" class="text-xs font-bold text-emerald-600 hover:text-emerald-700 flex items-center gap-1 mb-2">
+            <i class="fa-solid fa-arrow-left"></i> กลับหน้าหลัก
+          </button>
+          <h2 class="text-2xl font-bold text-slate-800 font-display">กระดานผู้นำ (Leaderboard)</h2>
+          <p class="text-xs text-slate-500 mt-1">จัดอันดับตามคะแนนสะสม เชื่อมโยงข้อมูลผ่าน Google Sheets</p>
+        </div>
+        <button onclick="fetchLeaderboardFromSheets()" class="px-4 py-2 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs flex items-center gap-1.5 transition-all">
+          <i class="fa-solid fa-arrows-rotate"></i> รีเฟรชข้อมูล
+        </button>
+      </div>
+
+      <!-- Ranking Shield Criteria Reference -->
+      <div class="bg-gradient-to-r from-amber-50 to-orange-50 p-4 rounded-3xl border border-amber-200">
+        <h4 class="font-bold text-amber-900 text-xs mb-2 flex items-center gap-1.5">
+          <i class="fa-solid fa-shield-halved"></i> เกณฑ์ระดับยศและตราโล่ประจำตัว:
+        </h4>
+        <div class="flex flex-wrap gap-2 text-[11px]">
+          <span class="px-2.5 py-1 rounded-full rank-badge-novice">🛡️ เริ่มต้น (0-99)</span>
+          <span class="px-2.5 py-1 rounded-full rank-badge-adventurer">🛡️ ปกติ (100-299)</span>
+          <span class="px-2.5 py-1 rounded-full rank-badge-master">🥇 สุดยอด (300-599)</span>
+          <span class="px-2.5 py-1 rounded-full rank-badge-legend">💎 ตำนาน (600-999)</span>
+          <span class="px-2.5 py-1 rounded-full rank-badge-ancient">🔥 ปีลึก (1,000-1,499)</span>
+          <span class="px-2.5 py-1 rounded-full rank-badge-mythic">👑 เก่ามาก (1,500+)</span>
+        </div>
+      </div>
+
+      <!-- Leaderboard List -->
+      <div id="leaderboardList" class="space-y-2.5">
+        <!-- Injected via JavaScript -->
+      </div>
+
+    </section>
+
+    <!-- ---------------------------------------- -->
+    <!-- VIEW: LESSON PLAN VIEWER (แผนการสอน)     -->
+    <!-- ---------------------------------------- -->
+    <section id="viewPlan" class="hidden space-y-6">
+      
+      <div class="flex items-center justify-between bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
+        <div>
+          <button onclick="switchView('viewHome')" class="text-xs font-bold text-emerald-600 hover:text-emerald-700 flex items-center gap-1 mb-2">
+            <i class="fa-solid fa-arrow-left"></i> กลับหน้าหลัก
+          </button>
+          <h2 class="text-2xl font-bold text-slate-800 font-display">แผนการจัดการเรียนรู้ (Lesson Plan)</h2>
+          <p class="text-xs text-slate-500 mt-1">กลุ่มสาระการเรียนรู้ภาษาต่างประเทศ ภาษาอังกฤษ ชั้น ป.3</p>
+        </div>
+        <span class="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full font-bold text-xs">
+          Active Learning (2W3P)
+        </span>
+      </div>
+
+      <div class="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-200 prose max-w-none text-slate-700 text-sm leading-relaxed space-y-4">
+        <h3 class="text-lg font-bold text-indigo-900 border-b pb-2">1. มาตรฐานการเรียนรู้และตัวชี้วัด</h3>
+        <p><strong>มาตรฐาน ต 1.1:</strong> เข้าใจและตีความเรื่องที่ฟังและอ่านจากสื่อประเภทต่าง ๆ (ต 1.1 ป.3/2, ต 1.1 ป.3/3)</p>
+        <p><strong>มาตรฐาน ต 4.1:</strong> ใช้ภาษาต่างประเทศในสถานการณ์ต่าง ๆ ในห้องเรียน (ต 4.1 ป.3/1)</p>
+
+        <h3 class="text-lg font-bold text-indigo-900 border-b pb-2 pt-2">2. วัตถุประสงค์การเรียนรู้</h3>
+        <ul class="list-disc pl-5 space-y-1">
+          <li><strong>ความรู้ (K):</strong> บอกความหมายและจำแนกคำศัพท์ออกเป็น 5 หมวดหมู่ (Animals, Food, School Things, Jobs, Clothes) ได้ถูกต้อง</li>
+          <li><strong>ทักษะ (P):</strong> อ่านออกเสียงและจับคู่คำศัพท์กับหมวดหมู่ผ่านเว็บแอปฯ ได้อย่างคล่องแคล่ว</li>
+          <li><strong>คุณลักษณะ (A):</strong> มีความกระตือรือร้นและมุ่งมั่นในการเรียนรู้ผ่านเกมดิจิทัล</li>
+        </ul>
+
+        <h3 class="text-lg font-bold text-indigo-900 border-b pb-2 pt-2">3. ขั้นตอนการจัดการเรียนรู้ 5 ขั้น (2W3P)</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs not-prose">
+          <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200">
+            <span class="font-bold text-emerald-700">1. ขั้นนำ (Warm-up - 10 นาที)</span>
+            <p class="text-slate-600 mt-1">ทักทาย ร้องเพลงสั้น Category Chant และทายภาพกระตุ้นความสนใจ</p>
+          </div>
+          <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200">
+            <span class="font-bold text-blue-700">2. ขั้นนำเสนอ (Presentation - 20 นาที)</span>
+            <p class="text-slate-600 mt-1">เปิดหน้าบทเรียนบนเว็บแอปฯ ฝึกอ่านออกเสียงตาม Speech Synthesis และสอน Trick</p>
+          </div>
+          <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200">
+            <span class="font-bold text-amber-700">3. ขั้นฝึกฝน (Practice - 20 นาที)</span>
+            <p class="text-slate-600 mt-1">แบ่งกลุ่มทดลองเล่นเกมโยงจับคู่และตอบคำถามเพื่อความเข้าใจ</p>
+          </div>
+          <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200">
+            <span class="font-bold text-purple-700">4. ขั้นนำไปใช้ (Production - 10 นาที)</span>
+            <p class="text-slate-600 mt-1">แต่งประโยคง่าย ๆ เช่น "An elephant is an animal."</p>
+          </div>
+        </div>
+        <div class="p-3 rounded-2xl bg-indigo-50 border border-indigo-200 text-xs not-prose">
+          <span class="font-bold text-indigo-900">5. ขั้นสรุปและประเมินผล (Wrap-up & Assessment - 60 นาที)</span>
+          <p class="text-slate-600 mt-1">นักเรียนเข้าสู่ระบบเว็บแอปพลิเคชัน ทำแบบทดสอบรายบุคคล วิเคราะห์ผลงาน เปรียบเทียบกับครั้งก่อน และมอบรางวัลผู้พิทักษ์คำศัพท์บน Leaderboard</p>
+        </div>
+
+        <div class="mt-4 p-4 rounded-2xl bg-slate-50 border border-slate-200 text-xs">
+          💡 สามารถอ่านไฟล์แผนการสอนฉบับเต็มอย่างละเอียดได้ในไฟล์ <strong>LESSON_PLAN.md</strong> ในโฟลเดอร์ของโปรเจกต์
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- MODAL: LOGIN / REGISTER (ชื่อ-นามสกุล)     -->
+  <!-- ========================================== -->
+  <div id="modalLogin" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
+    <div class="bg-white rounded-3xl p-6 md:p-8 max-w-md w-full shadow-2xl border-2 border-emerald-300 animate-wiggle">
+      
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl font-bold">
+            👤
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-slate-800 font-display">เข้าสู่ระบบ / ลงทะเบียน</h3>
+            <p class="text-xs text-slate-500">ระบบนักเรียน ป.3 ภาษาอังกฤษ</p>
+          </div>
+        </div>
+        <button onclick="closeLoginModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center text-sm">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-600 mb-4 bg-slate-50 p-3 rounded-2xl border border-slate-100">
+        💡 พิมพ์ชื่อ-นามสกุล ของนักเรียน ระบบจะตรวจสอบใน Google Sheets หากเคยเล่นแล้วจะดึงคะแนนเดิมมาแสดง หากเพิ่งมาครั้งแรกจะสร้างบัญชีใหม่ให้อัตโนมัติ!
+      </p>
+
+      <form onsubmit="event.preventDefault(); handleLoginOrRegister();" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">
+            ชื่อ-นามสกุล (Full Name):
+          </label>
+          <input type="text" id="inputFullName" required placeholder="เช่น ด.ช. รักเรียน ขยันยิ่ง" 
+                 class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200 focus:border-emerald-500 focus:outline-none text-slate-800 font-bold text-sm transition-all shadow-inner">
+        </div>
+
+        <div class="flex items-center gap-2 pt-2">
+          <button type="submit" id="btnLoginSubmit" class="flex-1 btn-fun bg-emerald-500 hover:bg-emerald-600 border-emerald-700 text-white py-3 rounded-2xl font-bold text-sm shadow-md flex items-center justify-center gap-2">
+            <i class="fa-solid fa-check"></i> ยืนยันเข้าสู่ระบบ
+          </button>
+          <button type="button" onclick="closeLoginModal()" class="px-4 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-sm transition-all">
+            ยกเลิก
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: CANCEL GAME CONFIRMATION            -->
+  <!-- ========================================== -->
+  <div id="modalCancelGame" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
+    <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border-2 border-rose-300 text-center animate-wiggle">
+      <div class="w-16 h-16 rounded-3xl bg-rose-100 text-rose-500 flex items-center justify-center text-3xl mx-auto mb-3">
+        ⚠️
+      </div>
+      <h3 class="text-xl font-bold text-slate-800 font-display mb-1">ต้องการยกเลิกการเล่น?</h3>
+      <p class="text-xs text-slate-500 mb-6 leading-relaxed">
+        หากกดยืนยัน ระบบจะพากลับไปยังหน้าหลัก และคะแนนของรอบนี้จะไม่ถูกบันทึกลงในระบบนะ
+      </p>
+      <div class="flex items-center gap-3">
+        <button onclick="confirmCancelGame()" class="flex-1 btn-fun bg-rose-500 hover:bg-rose-600 border-rose-700 text-white py-2.5 rounded-2xl font-bold text-xs shadow-md">
+          ยืนยันยกเลิก
+        </button>
+        <button onclick="closeCancelDialog()" class="flex-1 py-2.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-all">
+          เล่นต่อ
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: UNANSWERED CHECK ALERT              -->
+  <!-- ========================================== -->
+  <div id="modalUnansweredAlert" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
+    <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border-2 border-amber-300 text-center animate-wiggle">
+      <div class="w-16 h-16 rounded-3xl bg-amber-100 text-amber-500 flex items-center justify-center text-3xl mx-auto mb-3">
+        📝
+      </div>
+      <h3 class="text-xl font-bold text-slate-800 font-display mb-1">น้องยังตอบไม่ครบทุกข้อนะ!</h3>
+      <p id="unansweredListText" class="text-xs text-amber-700 font-bold bg-amber-50 p-2.5 rounded-xl border border-amber-200 mb-3">
+        ข้อที่ยังไม่ได้ตอบ: 3, 5
+      </p>
+      <p class="text-xs text-slate-500 mb-5 leading-relaxed">
+        ระบบจะพาน้องกลับไปยังข้อที่ยังไม่ได้ตอบโดยอัตโนมัติ เพื่อให้ตอบให้ครบทุกข้อก่อนส่งนะจ๊ะ!
+      </p>
+      <button onclick="handleJumpToUnanswered()" class="w-full btn-fun bg-amber-400 hover:bg-amber-300 border-amber-600 text-slate-900 py-3 rounded-2xl font-bold text-sm shadow-md flex items-center justify-center gap-2">
+        <i class="fa-solid fa-arrow-turn-down"></i> ไปทำข้อที่ยังไม่ตอบเดี๋ยวนี้!
+      </button>
+    </div>
+  </div>
+
+  <!-- JavaScript Main Engine -->
+  <script src="app.js"></script>
+</body>
+</html>

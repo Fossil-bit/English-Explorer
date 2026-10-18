@@ -1,0 +1,165 @@
+/* Custom styling for Grade 3 English Web Application */
+@import url('https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Fredoka:wght@400;600;700&display=swap');
+
+:root {
+  --font-primary: 'Mali', cursive, sans-serif;
+  --font-display: 'Fredoka', cursive, sans-serif;
+}
+
+body {
+  font-family: var(--font-primary);
+  background-color: #f0fdf4;
+  color: #1e293b;
+  overflow-x: hidden;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Custom animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-4deg); }
+  75% { transform: rotate(4deg); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s ease-in-out infinite;
+}
+
+.animate-wiggle {
+  animation: wiggle 0.5s ease-in-out;
+}
+
+/* Glassmorphism card */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+}
+
+/* Rank Shield Glows */
+.rank-badge-novice {
+  background: linear-gradient(135deg, #b45309, #d97706);
+  color: white;
+  box-shadow: 0 4px 14px rgba(180, 83, 9, 0.35);
+}
+
+.rank-badge-adventurer {
+  background: linear-gradient(135deg, #64748b, #94a3b8);
+  color: white;
+  box-shadow: 0 4px 14px rgba(100, 116, 139, 0.35);
+}
+
+.rank-badge-master {
+  background: linear-gradient(135deg, #eab308, #f59e0b);
+  color: white;
+  box-shadow: 0 4px 14px rgba(234, 179, 8, 0.45);
+}
+
+.rank-badge-legend {
+  background: linear-gradient(135deg, #06b6d4, #3b82f6);
+  color: white;
+  box-shadow: 0 4px 14px rgba(6, 182, 212, 0.45);
+}
+
+.rank-badge-ancient {
+  background: linear-gradient(135deg, #ea580c, #dc2626);
+  color: white;
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.45);
+}
+
+.rank-badge-mythic {
+  background: linear-gradient(135deg, #7c3aed, #c026d3, #f59e0b);
+  color: white;
+  box-shadow: 0 4px 16px rgba(192, 38, 211, 0.55);
+}
+
+/* Option Cards */
+.choice-card {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 3px solid #e2e8f0;
+}
+
+.choice-card:hover {
+  transform: translateY(-2px);
+  border-color: #3b82f6;
+  background-color: #eff6ff;
+}
+
+.choice-card.selected {
+  border-color: #3b82f6;
+  background-color: #dbeafe;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* Matching Game Connectors */
+.match-item {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.match-item:hover {
+  transform: scale(1.02);
+}
+
+.match-item.active-source {
+  border-color: #f59e0b !important;
+  background-color: #fef3c7 !important;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.4);
+}
+
+.match-item.matched {
+  background-color: #dcfce7 !important;
+  border-color: #22c55e !important;
+  color: #15803d;
+  opacity: 0.9;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Soft 3D Button style for Kids */
+.btn-fun {
+  transition: all 0.15s ease;
+  position: relative;
+  border-bottom-width: 4px;
+}
+
+.btn-fun:active {
+  transform: translateY(2px);
+  border-bottom-width: 2px;
+}
